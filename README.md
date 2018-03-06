@@ -60,7 +60,6 @@ new SimpleTooltip.Builder(this)
 <style name="simpletooltip_default" parent="@android:style/TextAppearance.Medium"></style>
 ```
 
-More info on the [sample project](https://github.com/douglasjunior/android-simple-tooltip/blob/master/sample/src/main/java/io/github/douglasjunior/androidSimpleTooltip/sample/MainActivity.java) and [javadoc](https://jitpack.io/com/github/douglasjunior/android-simple-tooltip/master-SNAPSHOT/javadoc/).
 
 ## Download
 ### Release
