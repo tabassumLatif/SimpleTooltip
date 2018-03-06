@@ -36,6 +36,8 @@ new SimpleTooltip.Builder(this)
     .anchorView(yourView)
     .text("Texto do Tooltip")
     .gravity(Gravity.END)
+    .setWidth(200)
+    .setHeight(200)
     .animated(true)
     .transparentOverlay(false)
     .build()
@@ -100,33 +102,3 @@ dependencies {
 }
 ```
 
-## Contribute
-
-New features, bug fixes and improvements in the translation are welcome! For questions and suggestions use the [issues](https://github.com/douglasjunior/android-simple-tooltip/issues).
-
-Before submit your PR, run the gradle check.
-```bash
-./gradlew build connectedCheck
-```
-
-<a href="https://www.patreon.com/douglasjunior"><img src="http://i.imgur.com/xEO164Z.png" alt="Become a Patron!" width="200" /></a>
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=E32BUP77SVBA2)
-
-
-## Known issues
-
-1. If you close the `Dialog/Activity` without the Tooltip is closed, there may be the exception `java.lang.IllegalArgumentException: Could not lock surface`. This error occurs because the animation continue for a while after closing the `Dialog/Activity`. (This error does not impact the execution of the app)
-
-2. If you call `tooltip.show()` after `Activity/Dialog` is closed, there may be the exception `android.view.WindowLeaked: Activity has leaked window android.widget.PopupWindow$PopupViewContainer that was originally added here`. [Read more.](http://stackoverflow.com/questions/2850573/activity-has-leaked-window-that-was-originally-added) (This error does not impact the execution of the app)
-
-3. From API 24, Android has changed the behavior of `PopupWindow` in relation to the [`setClippingEnabled`](https://developer.android.com/reference/android/widget/PopupWindow.html#setClippingEnabled(boolean)) property, which causes the Popup to be cut off. [Read more](https://github.com/douglasjunior/android-simple-tooltip/issues/40).
-
-## Licence
-
-```
-The MIT License (MIT)
-
-Copyright (c) 2016 Douglas Nassif Roma Junior
-```
-
-See the full [licence file](https://github.com/douglasjunior/android-simple-tooltip/blob/master/LICENSE).
