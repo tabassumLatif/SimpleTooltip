@@ -96,17 +96,13 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
     private final boolean mFocusable;
     private boolean dismissed = false;
     private int mHighlightShape = OverlayView.HIGHLIGHT_SHAPE_OVAL;
-    private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
     private int width = ViewGroup.LayoutParams.WRAP_CONTENT;
-    private int leftMargin = 0;
-    private int rightMargin = 0;
+    private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
     private SimpleTooltip(Builder builder) {
         mContext = builder.context;
         mGravity = builder.gravity;
-        width = builder.width;
-        height = builder.height;
         mArrowDirection = builder.arrowDirection;
         mDismissOnInsideTouch = builder.dismissOnInsideTouch;
         mDismissOnOutsideTouch = builder.dismissOnOutsideTouch;
@@ -133,8 +129,6 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         mFocusable = builder.focusable;
         mRootView = SimpleTooltipUtils.findFrameLayout(mAnchorView);
         mHighlightShape = builder.highlightShape;
-        this.leftMargin = builder.leftMargin;
-        this.rightMargin = builder.rightMargin;
 
         init();
     }
@@ -147,8 +141,8 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
     private void configPopupWindow() {
         mPopupWindow = new PopupWindow(mContext, null, mDefaultPopupWindowStyleRes);
         mPopupWindow.setOnDismissListener(this);
-        mPopupWindow.setWidth(width);
-        mPopupWindow.setHeight(height);
+        mPopupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setTouchable(true);
@@ -173,8 +167,6 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         mPopupWindow.setClippingEnabled(false);
         mPopupWindow.setFocusable(mFocusable);
     }
-
-
 
 
     public void show() {
@@ -257,9 +249,7 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         mContentView.setPadding((int) mPadding, (int) mPadding, (int) mPadding, (int) mPadding);
 
         LinearLayout linearLayout = new LinearLayout(mContext);
-        LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParams1.setMargins(leftMargin, 0, rightMargin, 0);
-        linearLayout.setLayoutParams(layoutParams1);
+        linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         linearLayout.setOrientation(mArrowDirection == ArrowDrawable.LEFT || mArrowDirection == ArrowDrawable.RIGHT ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
         int layoutPadding = (int) (mAnimated ? mAnimationPadding : 0);
         linearLayout.setPadding(layoutPadding, layoutPadding, layoutPadding, layoutPadding);
@@ -289,9 +279,9 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
             linearLayout.addView(mContentView);
         }
 
+//        LinearLayout.LayoutParams contentViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0);
         LinearLayout.LayoutParams contentViewParams = new LinearLayout.LayoutParams(width, height, 0);
         contentViewParams.gravity = Gravity.CENTER;
-        contentViewParams.setMargins(leftMargin, 0, rightMargin, 0);
         mContentView.setLayoutParams(contentViewParams);
 
         mContentLayout = linearLayout;
@@ -551,11 +541,9 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
         private float arrowHeight;
         private float arrowWidth;
         private boolean focusable;
-        private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        private int width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        private int leftMargin = 0;
-        private int rightMargin = 0;
         private int highlightShape = OverlayView.HIGHLIGHT_SHAPE_OVAL;
+        private int width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        private int height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
         public Builder(Context context) {
             this.context = context;
@@ -620,6 +608,16 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
             if (anchorView == null) {
                 throw new IllegalArgumentException("Anchor view not specified.");
             }
+        }
+
+        public Builder setWidth(int width){
+            this.width = width;
+            return this;
+        }
+
+        public Builder setHeight(int height){
+            this.height = height;
+            return this;
         }
 
         /**
@@ -695,14 +693,6 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
          */
         public Builder dismissOnInsideTouch(boolean dismissOnInsideTouch) {
             this.dismissOnInsideTouch = dismissOnInsideTouch;
-            return this;
-        }
-        public Builder setLeftMargin(int leftMargin) {
-            this.leftMargin = leftMargin;
-            return this;
-        }
-        public Builder setRightMargin(int rightMargin) {
-            this.rightMargin = rightMargin;
             return this;
         }
 
@@ -804,15 +794,6 @@ public class SimpleTooltip implements PopupWindow.OnDismissListener {
          */
         public Builder transparentOverlay(boolean transparentOverlay) {
             this.transparentOverlay = transparentOverlay;
-            return this;
-        }
-        public Builder setWidth(int width){
-            this.width = width;
-            return this;
-        }
-
-        public Builder setHeight(int height){
-            this.height = height;
             return this;
         }
 
